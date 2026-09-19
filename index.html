@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Yalisthenixs — Complete Calisthenics Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0c0d0f;--s1:#131417;--s2:#1a1c20;--line:#25272d;--line2:#3a3d45;
+  --tx:#ebe8e0;--body:#d6d3ca;--dim:#9b9da4;--mute:#6a6d76;
+  --ac:#e6b34a;--ac-ink:#171308;--ok:#78cf9d;--bad:#ee7b7b;
+  --disp:'Big Shoulders Display','Arial Narrow','Helvetica Neue',Arial,sans-serif;
+  --sans:'Instrument Sans','Helvetica Neue',Arial,system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg);-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(12,13,15,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .in{display:flex;align-items:center;gap:10px;height:54px}
+.brand{font:800 22px/1 var(--disp);letter-spacing:.08em;text-transform:uppercase;text-decoration:none}
+.dnav{display:none;margin-left:auto;gap:2px}
+.dnav a{padding:8px 12px;border-radius:6px;color:var(--dim);text-decoration:none;font-size:15px;font-weight:500}
+.dnav a.on{color:var(--tx);background:var(--s2)}
+.iconbtn{margin-left:auto;background:none;border:1px solid var(--line);color:var(--dim);width:38px;height:38px;border-radius:8px;display:grid;place-items:center;cursor:pointer}
+.iconbtn:hover{color:var(--tx);border-color:var(--line2)}
+.gbar{height:2px;background:var(--line)}
+.gbar i{display:block;height:100%;width:0;background:var(--ac);transition:width .4s ease}
+
+/* bottom nav (phones) */
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;background:rgba(12,13,15,.97);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.bnav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 8px;font-size:12px;color:var(--mute);text-decoration:none}
+.bnav a.on{color:var(--ac)}
+.bnav svg,.iconbtn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media(min-width:760px){.bnav{display:none}.dnav{display:flex}.iconbtn{margin-left:0}}
+
+#app{padding-bottom:100px}
+@media(min-width:760px){#app{padding-bottom:64px}}
+
+/* type */
+h1{font:800 clamp(34px,8vw,50px)/1.03 var(--disp);letter-spacing:.005em;margin:30px 0 10px}
+h2{font:700 24px/1.15 var(--disp);letter-spacing:.01em;margin:34px 0 8px}
+.mark{font:900 clamp(46px,15.5vw,104px)/.9 var(--disp);letter-spacing:.02em;text-transform:uppercase;margin:34px 0 14px;overflow-wrap:anywhere}
+.lede{color:var(--dim);font-size:17px;max-width:52ch;margin:0 0 22px}
+.dim{color:var(--dim)}
+.small{font-size:14px}
+.crumb{display:inline-block;margin-top:22px;color:var(--dim);font-size:14px;text-decoration:none}
+.crumb:hover{color:var(--tx)}
+
+/* ladder */
+.ladder{display:flex;gap:3px;margin:8px 0 10px}
+.rung{flex:1;height:14px;background:var(--s2);border-radius:2px;overflow:hidden;display:block}
+.rung i{display:block;height:100%;background:var(--ac)}
+.pcttxt{display:flex;justify-content:space-between;color:var(--dim);font-size:14px;margin-bottom:22px}
+.pcttxt b{color:var(--tx);font-weight:600}
+
+/* buttons */
+.btn{display:inline-block;background:var(--ac);color:var(--ac-ink);border:1px solid var(--ac);border-radius:8px;padding:13px 20px;font:600 16px/1.2 var(--sans);text-decoration:none;cursor:pointer;text-align:center}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--tx);border-color:var(--line2)}
+.btn.ghost:hover{border-color:var(--dim);filter:none}
+.btn.done{background:transparent;color:var(--ok);border-color:var(--ok)}
+.btn.block{display:block;width:100%}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:26px 0}
+.stat{padding:16px 0 14px}
+.stat+.stat{padding-left:16px;border-left:1px solid var(--line)}
+.stat b{display:block;font:800 38px/1 var(--disp)}
+.stat span{color:var(--dim);font-size:13px}
+
+/* rows */
+.list{margin:6px 0 0}
+.row{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line);text-decoration:none;color:inherit}
+.row:hover .t{color:var(--ac)}
+.row .n{font:700 28px/1 var(--disp);color:var(--mute);width:32px;flex:none;padding-top:2px}
+.row .mid{flex:1;min-width:0}
+.row .t{font-weight:600;font-size:17px;line-height:1.3}
+.row .m{color:var(--dim);font-size:14px;margin-top:2px}
+.row .r{color:var(--dim);font-size:13px;white-space:nowrap;padding-top:3px}
+.tag{display:inline-block;border:1px solid var(--line2);border-radius:4px;padding:0 6px;font-size:12px;color:var(--dim);margin-right:8px;line-height:18px}
+.mini{height:3px;background:var(--line);margin-top:10px;border-radius:2px;overflow:hidden}
+.mini i{display:block;height:100%;background:var(--ac)}
+.chk{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line2);flex:none;display:grid;place-items:center;margin-top:1px}
+.chk.on{background:var(--ok);border-color:var(--ok)}
+.chk svg{width:13px;height:13px;stroke:#0b1a10;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;display:none}
+.chk.on svg{display:block}
+.quizrow .n{color:var(--ac)}
+
+/* lesson */
+.eyebrow{color:var(--dim);font-size:14px;margin-top:22px}
+.prose p{color:var(--body);font-size:17px;line-height:1.72;max-width:62ch;margin:0 0 18px}
+.remember{border-left:2px solid var(--ac);padding:2px 0 2px 18px;margin:28px 0}
+.remember h3{font:700 20px/1 var(--disp);letter-spacing:.02em;margin:0 0 10px}
+.remember ul{margin:0;padding-left:18px;color:var(--body)}
+.remember li{margin:6px 0;padding-left:2px}
+.pn{display:grid;gap:10px;margin-top:26px}
+@media(min-width:560px){.pn{grid-template-columns:1fr 1fr}}
+.pn a{display:block;border:1px solid var(--line);border-radius:8px;padding:12px 14px;text-decoration:none}
+.pn a:hover{border-color:var(--line2)}
+.pn small{display:block;color:var(--dim);font-size:12.5px}
+.pn span{font-weight:600;line-height:1.3;display:block;margin-top:2px}
+
+/* quiz */
+.qtop{display:flex;justify-content:space-between;color:var(--dim);font-size:14px;margin:24px 0 8px}
+.qbar{height:3px;background:var(--line);border-radius:2px;overflow:hidden;margin-bottom:22px}
+.qbar i{display:block;height:100%;background:var(--ac)}
+.q{font:700 clamp(24px,6vw,30px)/1.15 var(--disp);margin:0 0 20px}
+.opt{display:block;width:100%;text-align:left;background:var(--s1);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:10px;font-size:16px;line-height:1.4;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--dim)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--ok);background:rgba(120,207,157,.1)}
+.opt.bad{border-color:var(--bad);background:rgba(238,123,123,.1)}
+.fb{margin:14px 0 4px;font-size:15px;color:var(--dim)}
+.fb b{color:var(--tx)}
+.score{font:900 clamp(64px,20vw,110px)/.9 var(--disp);margin:22px 0 6px}
+
+/* tracker */
+.skill{border-top:1px solid var(--line);padding:20px 0 22px}
+.skill:last-child{border-bottom:1px solid var(--line)}
+.skill .hd{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.skill h3{font:700 26px/1 var(--disp);margin:0}
+.skill .cur{color:var(--dim);font-size:14px;text-align:right}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+.chip{border:1px solid var(--line);background:transparent;color:var(--dim);padding:7px 12px;border-radius:999px;font-size:13.5px;cursor:pointer}
+.chip.reached{color:var(--tx);border-color:var(--line2)}
+.chip.on{background:var(--ac);color:var(--ac-ink);border-color:var(--ac);font-weight:600}
+.best{display:flex;align-items:center;gap:10px;color:var(--dim);font-size:14px;margin-top:6px}
+.best input,.sbox{background:var(--s1);border:1px solid var(--line2);color:var(--tx);border-radius:8px;font:500 16px var(--sans);padding:9px 12px}
+.best input{width:84px}
+.sbox{width:100%;padding:14px 16px;font-size:17px}
+.sbox::placeholder{color:var(--mute)}
+
+/* search */
+.hit{display:block;padding:15px 0;border-bottom:1px solid var(--line);text-decoration:none}
+.hit:hover .t{color:var(--ac)}
+.hit .t{font-weight:600;font-size:17px}
+.hit .m{color:var(--dim);font-size:13px}
+.hit p{margin:4px 0 0;color:var(--body);font-size:14.5px;line-height:1.5}
+mark{background:rgba(230,179,74,.28);color:var(--tx);border-radius:2px;padding:0 1px}
+.empty{color:var(--dim);margin-top:24px}
+
+/* toast */
+#toast{position:fixed;left:50%;bottom:86px;transform:translate(-50%,12px);background:var(--tx);color:#111;padding:10px 16px;border-radius:8px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:40;max-width:88vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media(min-width:760px){#toast{bottom:32px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* print */
+#printRoot{display:none}
+@media print{
+  :root{padding:0!important}
+  html,body{background:#fff!important;color:#000!important}
+  body>*:not(#printRoot){display:none!important}
+  #printRoot{display:block;font:11.5pt/1.5 Georgia,'Times New Roman',serif;color:#000}
+  #printRoot h1{font:700 30pt/1.1 Georgia,serif;margin:0 0 4pt}
+  #printRoot h2{font:700 18pt/1.2 Georgia,serif;margin:0 0 4pt;page-break-before:always}
+  #printRoot h2.first{page-break-before:avoid}
+  #printRoot h3{font:700 13pt/1.3 Georgia,serif;margin:16pt 0 4pt;page-break-after:avoid}
+  #printRoot p{margin:0 0 7pt}
+  #printRoot ul{margin:4pt 0 8pt;padding-left:16pt}
+  #printRoot li{margin:2pt 0}
+  #printRoot .meta{color:#444;font-size:10pt}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap in">
+    <a class="brand" href="#/" aria-label="Yalisthenixs home">Yalisthenixs</a>
+    <nav class="dnav" id="dnav" aria-label="Main"></nav>
+    <button class="iconbtn" data-act="print" data-scope="all" aria-label="Print or save the full course as PDF" title="Print or save as PDF">
+      <svg viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg>
+    </button>
+  </div>
+  <div class="gbar" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="100" id="gbarwrap"><i id="gbar"></i></div>
+</header>
+
+<main id="app" class="wrap"></main>
+
+<nav class="bnav" id="bnav" aria-label="Main"></nav>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="printRoot" aria-hidden="true"></div>
+
+<script>
+/* ---------- COURSE CONTENT ---------- */
+const MODS=[
+{t:"Calisthenics Fundamentals",lv:"Beginner",d:"Start here. Learn how bodyweight training scales, which movement patterns matter, and what a good rep looks like.",
+ L:[
+ {t:"How bodyweight training actually works",p:["In calisthenics your bodyweight is the load, and leverage is the dial. You don't add plates. You change the angle of your body, the length of the lever, or how much of your weight sits on your hands or feet.","That is why an incline push-up, a standard push-up and a planche lean are one movement at different difficulties. Once you see exercises as points on a leverage scale, progressions stop being random lists and start being a map."],k:["Difficulty comes from bodyweight and leverage together","Scale by changing angle, lever length or base of support","Same pattern with harder leverage is a progression","Both strength and skill improve with practice"]},
+ {t:"The movement patterns",p:["Almost every bodyweight exercise falls into a small set of patterns: horizontal push (push-up), vertical push (pike push-up), horizontal pull (row), vertical pull (pull-up), squat, hinge, and trunk stability (plank, hollow hold).","Train every pattern each week. When one is missing, it shows up fast. Pull-light programs give cranky shoulders, and skipped leg days leave a weak base for everything else."],k:["Push and pull, horizontal and vertical","Squat and hinge for the legs","Trunk stability holds it all together","Hit every pattern weekly"]},
+ {t:"What a good rep looks like",p:["A good rep uses the full range you own, at a speed you control, with no bouncing or swinging. If a rep needs momentum to finish, it is really a different exercise.","Use tempo to check yourself: about two seconds down, a brief pause at the hardest point, then a firm push or pull up. Stop a set when your next rep would break form, not when you are out of breath."],k:["Full range, controlled speed, no swinging","About 2 seconds down, pause, drive up","End the set when form would break"]}
+ ],
+ Q:[
+ {q:"Which change makes a push-up harder without adding weight?",o:["Raising your feet above your hands","Raising your hands on a bench","Bending your knees","Doing it faster"],a:0},
+ {q:"A pull-up belongs to which movement pattern?",o:["Vertical pull","Horizontal push","Hinge","Trunk stability"],a:0},
+ {q:"A rep that needs swinging to finish should be...",o:["Cleaned up, since it is really a different exercise","Counted anyway","Done faster next time","Ignored"],a:0}
+ ]},
+
+{t:"Full-Body Foundations",lv:"Beginner",d:"How to structure your first weeks of training and warm up so your joints are ready for the work.",
+ L:[
+ {t:"Your first training week",p:["For a beginner, three full-body sessions a week is hard to beat. Each session practises every pattern, so skills improve faster than on a once-a-week split. Leave a rest day between sessions.","A simple session: a squat variation, a push, a pull, a trunk hold and five minutes of skill practice such as a hollow hold or dead hang. Do 2 to 3 sets of 5 to 8 clean reps and stop with a rep or two left in the tank."],k:["Three full-body days per week with rest between","One exercise per pattern each session","2 to 3 sets of 5 to 8 clean reps","Leave 1 to 2 reps in reserve"]},
+ {t:"Warm-ups that prepare, not exhaust",p:["A warm-up has three jobs: raise your temperature, mobilise the joints you're about to load, and rehearse the movement with lighter versions. Two minutes of easy cardio, then wrist and shoulder circles, hip openers and cat-cows works well.","Finish with ramp-up sets of your first exercise, like incline push-ups before push-ups. Wrists deserve extra time, because push-ups, handstands and planche work all put your weight through them."],k:["Raise heat, mobilise, then rehearse","Ramp up with easier variations","Prep wrists before any hand-supported work","A warm-up should never tire you out"]}
+ ],
+ Q:[
+ {q:"Why do beginners do well with three full-body days a week?",o:["Each pattern gets practised more often","Muscles only grow on training days","It removes the need for rest","It is simply easier to count"],a:0},
+ {q:"The goal of a warm-up is to...",o:["Prepare joints and rehearse the movements","Fatigue the muscles first","Replace all stretching forever","Burn as many calories as possible"],a:0},
+ {q:"Which body part needs extra prep before push-ups and handstands?",o:["Wrists","Ankles","Jaw","Toes"],a:0}
+ ]},
+
+{t:"Push: Chest",lv:"Beginner",d:"Push-up mechanics, the progression ladder from wall to one-arm, and how to use dips well.",
+ L:[
+ {t:"Push-up mechanics",p:["Set your hands just outside shoulder width, fingers spread, and lock your body into a straight plank with ribs down and glutes squeezed. Lower until your chest is a fist from the floor, elbows at about 45 degrees from your torso.","Flaring the elbows out to 90 degrees dumps stress on the front of the shoulder. Tucked elbows share the load with the chest and triceps. At the top, push the floor away so your shoulder blades spread slightly (protraction)."],k:["Hands just outside shoulder width","Straight plank from head to heels","Elbows around 45 degrees, not flared","Finish by pushing the floor away"]},
+ {t:"The push progression ladder",p:["Work up one rung at a time: wall push-up, incline push-up, full push-up, decline push-up, archer push-up, pseudo planche push-up, then one-arm work. Use inclines rather than knee push-ups, because an incline keeps the plank position you will need later.","Move up when you hit 3 sets of 10 to 12 clean reps. Dips add another angle: lean forward for more chest, stay upright for more triceps, and keep your shoulders down and back at the bottom."],k:["Incline first, not knees","Move up at 3 sets of 10 to 12 clean reps","Forward-leaning dips hit more chest","Keep shoulders down and back in the dip"]}
+ ],
+ Q:[
+ {q:"What is a good elbow angle relative to the torso in a push-up?",o:["About 45 degrees","About 90 degrees","Pinned to the ribs at 0 degrees","It makes no difference"],a:0},
+ {q:"Why is an incline push-up easier than a floor push-up?",o:["Less bodyweight is loaded onto the arms","It uses different muscles","It has a shorter range","It needs no balance"],a:0},
+ {q:"When should you move to a harder push-up variation?",o:["At 3 sets of 10 to 12 clean reps","After one perfect rep","Every week regardless","Never"],a:0}
+ ]},
+
+{t:"Pull: Back",lv:"Beginner",d:"How a pull-up really works, and a step-by-step route to your first full rep and beyond.",
+ L:[
+ {t:"Anatomy of a pull-up",p:["A pull-up starts before your elbows bend. Begin from a dead hang, then pull your shoulder blades down (scapular depression). Then drive your elbows down and back so your chest travels toward the bar.","The lats do most of the work, with help from the biceps, rear delts and mid-back. Palms away is a pull-up, palms toward you is a chin-up, which recruits more biceps. Skip the kip while you are learning: momentum hides weak spots."],k:["Depress the shoulder blades first","Drive elbows down and back","Lats lead, biceps assist","Chin-ups use more biceps than pull-ups"]},
+ {t:"Building your first pull-up",p:["Stack these drills: dead hangs for 20 to 30 seconds, scapular pull-ups, inverted rows, slow negatives (jump up and lower over 4 to 5 seconds) and band-assisted reps.","Train them two or three times a week. Rows build volume and balance out your pushing. Once your negatives feel smooth, your first full rep is usually close."],k:["Dead hangs and scapular pulls first","Slow negatives of 4 to 5 seconds","Inverted rows for volume","Two or three pulling days per week"]}
+ ],
+ Q:[
+ {q:"Which muscle does most of the work in a pull-up?",o:["Latissimus dorsi","Pectorals","Calves","Abdominals"],a:0},
+ {q:"What is the first movement of a good pull-up?",o:["Depressing the shoulder blades","Bending the elbows","Kicking the legs","Tilting your head back"],a:0},
+ {q:"A good way to build toward your first pull-up is...",o:["Slow negatives and inverted rows","Only stretching","Kipping as high as possible","Avoiding hangs"],a:0}
+ ]},
+
+{t:"Arms",lv:"Beginner",d:"Biceps, triceps and forearms, and how to train them safely with just your body.",
+ L:[
+ {t:"Biceps and triceps without dumbbells",p:["Your arms already work in every pull-up and push-up, but you can add targeted work. For biceps use chin-ups, ring or towel curls and slow negatives. For triceps use close-grip push-ups, bench or ring dips and bodyweight triceps extensions on a low bar or rings.","Choose variations where the elbow moves through a full range under control. Adding a slow lowering phase of three to four seconds makes almost any of them more effective."],k:["Chin-ups and ring curls for biceps","Close-grip push-ups and dips for triceps","Full range, controlled","Slow lowering makes them harder"]},
+ {t:"Forearms, grip and tendon care",p:["Grip is often the first limit on hanging skills. Train it with dead hangs, towel hangs and fingertip holds, adding time before adding difficulty. Balance the flexors with wrist extension work such as band finger extensions.","Tendons adapt more slowly than muscle. If your elbows or wrists ache, you likely progressed faster than your connective tissue. Drop back a step, keep volume lower and build up over weeks."],k:["Add hang time before difficulty","Train wrist extensors too","Tendons adapt slower than muscles","Achy elbows: step back, build slowly"]}
+ ],
+ Q:[
+ {q:"Which is an effective bodyweight biceps exercise?",o:["Ring curl","Pike push-up","Plank","Squat"],a:0},
+ {q:"Why can elbow tendons ache when you progress quickly?",o:["Tendons adapt more slowly than muscles","Muscles stop recovering","It means you should push harder","Chalk causes it"],a:0},
+ {q:"How should you build grip strength?",o:["Dead hangs, adding time first","Only very heavy weights","Never hang","Always use straps"],a:0}
+ ]},
+
+{t:"Shoulders",lv:"Intermediate",d:"Understand the shoulder blade, keep the rotator cuff healthy and start pressing overhead.",
+ L:[
+ {t:"The shoulder and the scapula",p:["The shoulder is the most mobile joint you own, which means it depends on muscles for stability. The shoulder blade moves in four main ways: it elevates, depresses, protracts and retracts. Skilled calisthenics is largely learning to control it.","The rotator cuff centres the ball in the socket. Keep it healthy with band external rotations and slow pulling work. A shoulder that cannot stay stable under load will complain long before it gets strong."],k:["Elevate, depress, protract, retract","Scapular control drives every skill","Rotator cuff keeps the joint centred"]},
+ {t:"Overhead pressing with pike push-ups",p:["Start with a pike push-up: hips high, hands shoulder width, and lower your head between your hands in a slight arc. Then elevate your feet to shift more weight onto the shoulders, and work toward wall handstand push-ups.","Balance pressing with pulling. For every overhead set, do a set of rows, face pulls or band pull-aparts so the rear delts and mid-back keep pace."],k:["Hips high, head travels in a slight arc","Elevate feet to increase load","Pair every press with a pull"]}
+ ],
+ Q:[
+ {q:"Which of these is NOT a shoulder blade movement?",o:["Hip hinge","Elevation","Depression","Protraction"],a:0},
+ {q:"Why pair overhead pressing with rows and pull-aparts?",o:["They build the rear delts and mid-back for a stable shoulder","They cancel the pressing","They shorten workouts","They are only for warm-ups"],a:0},
+ {q:"A pike push-up becomes harder when you...",o:["Elevate your feet","Lower your feet","Shorten the range","Bend your knees deeply"],a:0}
+ ]},
+
+{t:"Core",lv:"Intermediate",d:"Why the core is about stability, how to build a proper hollow body, and the path to leg raises and the L-sit.",
+ L:[
+ {t:"Core is stability, not just crunches",p:["Your core exists mostly to stop movement: to keep your spine from arching, twisting or collapsing while your limbs work. That is why planks and hollow body holds matter more than endless crunches.","The hollow hold is the shape behind handstands, levers and planches. Press your lower back into the floor, ribs down, pelvis tucked, arms overhead, legs low. If your lower back lifts, raise your legs or bend your knees."],k:["Core resists unwanted movement","Hollow hold: ribs down, pelvis tucked","If your back lifts, raise the legs"]},
+ {t:"Leg raises and the L-sit",p:["Progress leg raises from knee tucks to hanging knee raises, then straight-leg raises and toes-to-bar. Keep the pelvis tucked so the abs, not just the hip flexors, do the work.","The L-sit combines compression strength with shoulder depression. Move from a tuck L-sit to one leg extended and then both legs. Press down hard through your hands and keep your arms locked."],k:["Tuck the pelvis on every raise","Tuck, then one leg, then full L-sit","Press down and lock the arms"]}
+ ],
+ Q:[
+ {q:"The main job of the core in bodyweight skills is to...",o:["Resist unwanted spine movement","Bend the spine as far as possible","Rest during sets","Only improve looks"],a:0},
+ {q:"In a hollow hold, if your lower back lifts you should...",o:["Raise your legs or bend your knees","Ignore it","Arch harder","Hold your breath"],a:0},
+ {q:"Which comes first in an L-sit progression?",o:["Tuck L-sit","Full L-sit","V-sit","Manna"],a:0}
+ ]},
+
+{t:"Legs",lv:"Intermediate",d:"Squat, lunge and hinge patterns using only bodyweight, and how to earn a pistol squat.",
+ L:[
+ {t:"Squat, lunge and hinge",p:["Bodyweight legs progress through single-leg work. Move from squats to split squats, then Bulgarian split squats, shrimp squats and pistols. Keep your whole foot on the floor and let the knees track over the toes.","Add a hinge for the hamstrings and glutes: single-leg Romanian deadlifts and Nordic curls. Do both, since squat and hinge patterns train different ranges."],k:["Squat, then split squat, then single-leg","Whole foot on the floor","Add hinges for hamstrings and glutes"]},
+ {t:"Working toward the pistol squat",p:["A pistol needs three things at once: strength, balance and ankle mobility. Train box pistols to a bench, assisted pistols holding a doorframe or rings, then counterbalanced pistols holding a light weight in front.","Add slow negatives, calf raises and ankle mobility drills. If your heel lifts, put a small plate under it while you build mobility."],k:["Strength, balance, ankle mobility","Box, assisted, counterbalanced, full","Slow negatives build control"]}
+ ],
+ Q:[
+ {q:"Which is a hamstring-focused bodyweight exercise?",o:["Nordic curl","Calf raise","Push-up","Dip"],a:0},
+ {q:"What three things does a pistol squat need together?",o:["Strength, balance and ankle mobility","Speed, luck and grip","Only strength","Only flexibility"],a:0},
+ {q:"Why do single-leg exercises suit bodyweight leg training?",o:["They make bodyweight challenging enough","They need heavy weights","They remove the need for balance","They are shorter"],a:0}
+ ]},
+
+{t:"Full-Body Workouts",lv:"Intermediate",d:"Ready-to-run sessions, plus how to build your own skill and strength day.",
+ L:[
+ {t:"Three sessions to start with",p:["Here are three templates you can run today. Choose the one that matches your level and repeat it for two to four weeks before changing anything.","Rest 60 to 90 seconds between exercises and finish each session with a few minutes of easy mobility."],k:["Beginner, 3 rounds: 8 squats, 6 incline push-ups, 6 inverted rows, 20 second hollow hold","Intermediate, 4 rounds: 6 pull-ups, 8 push-ups, 8 split squats each side, 25 second tuck L-sit","Advanced, 4 rounds: 5 weighted pull-ups, 8 dips, 5 pistols each side, 10 hanging leg raises"]},
+ {t:"Structuring a skill plus strength day",p:["Order matters. Warm up, then practise your skill while you are fresh, because skills need precision. Do your main strength work next, then accessories and a short cooldown.","A 60 minute session might be 10 minutes of warm-up, 15 of skill (handstand or lever), 25 of strength and 10 of accessories. Keep skill work short and sharp, and quit before your form fades."],k:["Warm-up, skill, strength, accessories, cooldown","Skills go first while you are fresh","Stop skill sets before form fades"]}
+ ],
+ Q:[
+ {q:"Why practise skills early in a session?",o:["You are fresh and can be precise","They are easier when tired","It is tradition","They burn more calories"],a:0},
+ {q:"How long should you repeat a template before changing it?",o:["Two to four weeks","One session","Every day","Never"],a:0},
+ {q:"How much rest between exercises in these templates?",o:["About 60 to 90 seconds","5 seconds","20 minutes","None"],a:0}
+ ]},
+
+{t:"Handstands",lv:"Intermediate",d:"From the wall to freestanding: alignment, balance strategies and safe bailing.",
+ L:[
+ {t:"Wall handstand basics",p:["Start facing the wall and walk your feet up until your chest almost touches it. Hands shoulder width apart, fingers spread, pressing through the whole palm. Push tall through your shoulders so your ears sit between your arms.","Squeeze the glutes, tuck the ribs and keep a slight hollow line. Build to 30 second holds before working on balance. The wall is a tool for alignment, not something to lean on with an arched back."],k:["Chest toward the wall for better alignment","Push tall through the shoulders","Aim for 30 second holds first"]},
+ {t:"Learning to balance freestanding",p:["Balance comes from your fingers and the heel of your hand. If you drift forward, press through the fingertips to bring your weight back. If you fall back, push through the heel of the hand.","Practise short and often: five to ten minutes a day beats one long session. Learn to bail out safely with a cartwheel or controlled roll first, so you are not afraid to commit."],k:["Fingertips catch forward, heel catches back","Short, frequent practice","Learn to bail before you commit"]}
+ ],
+ Q:[
+ {q:"Which way do you face in a chest-to-wall handstand?",o:["Toward the wall","Away from the wall","Sideways","It does not matter"],a:0},
+ {q:"If you overbalance forward, you correct by...",o:["Pressing through your fingertips","Bending your elbows","Kicking harder","Closing your eyes"],a:0},
+ {q:"Which practice pattern works best for balance?",o:["Short, frequent sessions","One long weekly session","Only when exhausted","Never practise"],a:0}
+ ]},
+
+{t:"Handstand Push-Ups",lv:"Advanced",d:"A safe route from pike push-ups to full range handstand push-ups.",
+ L:[
+ {t:"The path to the handstand push-up",p:["Progress from pike push-ups to elevated pike push-ups, then wall handstand negatives, partial-range wall HSPUs and finally full range. Keep your hands and head forming a triangle so the bottom position stays stable.","Before starting wall HSPU work, be able to hold a 30 second wall handstand and do 10 clean elevated pike push-ups."],k:["Pike, elevated pike, negatives, partials, full","Hands and head form a triangle","Prerequisite: 30 second wall handstand"]},
+ {t:"Safe, strong overhead pressing",p:["Lower slowly with the elbows at about 45 degrees. Don't bounce off your head. A folded mat or parallettes let you deepen the range once you are ready.","Overhead volume adds up quickly for the shoulders. Two or three focused sessions a week with plenty of rest beats daily grinding."],k:["Slow lowering, no bouncing","Deepen range with parallettes when ready","Two or three sessions per week"]}
+ ],
+ Q:[
+ {q:"Which is a prerequisite for wall HSPUs?",o:["A 30 second wall handstand","A muscle-up","A full planche","A pistol squat"],a:0},
+ {q:"What should you avoid at the bottom of the rep?",o:["Bouncing off your head","Controlled lowering","Elbows at 45 degrees","Breathing"],a:0},
+ {q:"What is a good weekly frequency for overhead pressing?",o:["Two or three focused sessions","Every hour","Once a year","Only on test days"],a:0}
+ ]},
+
+{t:"Weighted Calisthenics",lv:"Advanced",d:"When to add load, how much, and how to track it.",
+ L:[
+ {t:"When to add weight",p:["Add load when a movement is easy for 3 sets of 12 clean reps, or when you want to train in a lower rep range (5 to 8) for strength. Weight keeps pull-ups, dips and squats challenging long after bodyweight stops working.","Start small: 2.5 to 5 kg on a belt or vest. Your form should stay exactly the same as the bodyweight version. If it changes, drop the load."],k:["3 sets of 12 clean reps is the trigger","Start with 2.5 to 5 kg","Form must match your bodyweight reps"]},
+ {t:"Weighted pull-ups, dips and squats",p:["A dip belt or weighted vest works for pull-ups, dips and squats. Track loads as added weight by reps, such as +10 kg x 5, and increase when you hit the top of your target rep range on all sets.","Take extra warm-up sets before heavy work. Your elbows and shoulders take more strain with added load, so build up over weeks."],k:["Log as added weight by reps","Increase when all sets hit the top of the range","Extra warm-up sets before heavy work"]}
+ ],
+ Q:[
+ {q:"When should you consider adding weight?",o:["When 3 sets of 12 clean reps feel easy","After one failed rep","Before you learn the form","Never"],a:0},
+ {q:"Which is a sensible first load?",o:["2.5 to 5 kg","50 kg","Your full bodyweight","No warm-up needed"],a:0},
+ {q:"If form breaks down with added weight, you should...",o:["Reduce the load","Add more","Ignore it","Stop training"],a:0}
+ ]},
+
+{t:"Planche",lv:"Advanced",d:"The straight-arm push skill: what it demands, how to lean, and how to protect your tendons.",
+ L:[
+ {t:"What the planche demands",p:["The planche is a straight-arm push: your body holds horizontal while balanced on your hands, driven by shoulder protraction, forward lean, wrist and biceps tendon strength and a hollow core. Lean is the main variable.","The ladder: planche lean, frog stand, tuck planche, advanced tuck, straddle, full planche. Expect months, not weeks, for each step."],k:["Straight arms, protracted shoulders","Lean is the main variable","Lean, frog, tuck, advanced tuck, straddle, full"]},
+ {t:"Lean training and tendon care",p:["Build lean holds of 10 to 20 seconds with straight arms and protracted shoulders. Add pseudo planche push-ups, with your hands by your hips and fingers pointing back or out.","Straight-arm work stresses the biceps tendons, elbows and wrists. Progress slowly, warm up thoroughly and stop a set when your form softens. Two or three sessions a week is plenty."],k:["Lean holds of 10 to 20 seconds","Pseudo planche push-ups","Warm up thoroughly, progress slowly"]}
+ ],
+ Q:[
+ {q:"What is the biggest variable in planche progress?",o:["Forward lean","Speed","Grip width only","Toe height"],a:0},
+ {q:"Which planche step comes first?",o:["Planche lean","Straddle planche","Full planche","Advanced tuck"],a:0},
+ {q:"Straight-arm skills stress mostly...",o:["Elbow, wrist and biceps tendons","Only the calves","Only the ankles","Only the spine"],a:0}
+ ]},
+
+{t:"Front Lever",lv:"Advanced",d:"Straight-arm pulling: progressions, training methods and cues.",
+ L:[
+ {t:"Straight-arm pulling",p:["The front lever holds your body horizontal below a bar, facing up, with straight arms. It needs strong lats, a braced hollow core and depressed shoulder blades.","Progress from tuck to advanced tuck, one-leg, straddle and full. Keep your hips level with your shoulders and your shoulders pulled down and back."],k:["Body horizontal, arms straight","Lats, core and depressed shoulders","Hips level with the shoulders"]},
+ {t:"How to train it",p:["Use isometric holds of 5 to 10 seconds, slow negatives from an inverted hang, and front lever rows once you have a solid tuck. Quality beats duration, so end holds when your hips sag.","Support the skill with heavy pull-ups, hanging leg raises and hollow holds. Rest 2 to 3 minutes between sets, since this is high-tension work."],k:["Holds of 5 to 10 seconds, negatives, rows","End the hold when hips sag","Rest 2 to 3 minutes between sets"]}
+ ],
+ Q:[
+ {q:"In a front lever, your hips should be...",o:["Level with your shoulders","Well below your shoulders","Bent to 90 degrees","Ignored"],a:0},
+ {q:"Which is a common front lever training method?",o:["Tuck holds and slow negatives","Only running","Only stretching","Jumping"],a:0},
+ {q:"Which muscle group is central to the front lever?",o:["Lats","Calves","Neck","Forearm extensors only"],a:0}
+ ]},
+
+{t:"Programming",lv:"Intermediate",d:"How to choose reps, sets, weekly volume and a training split that fits your life.",
+ L:[
+ {t:"Sets, reps and effort",p:["Rep ranges guide the goal: about 3 to 6 reps for strength, 6 to 15 for muscle size and above 15 for endurance. Most of your hard sets should end one or two reps before failure.","Weekly volume matters too. Many people grow well on roughly 10 to 20 hard sets per muscle group per week, spread across sessions. Start at the low end and add sets only when you are recovering well."],k:["3 to 6 reps for strength, 6 to 15 for size","Stop 1 to 2 reps before failure","Start with lower volume, add gradually"]},
+ {t:"Choosing a weekly split",p:["Three full-body days suit beginners. Four days as upper/lower or push/pull/legs suit intermediates. Skills like handstands and levers respond best to little and often, so give them short slots most days.","Plan a deload every four to eight weeks: cut volume by about half for a week while keeping the movements. You will come back stronger."],k:["Beginners: 3 full-body days","Skills: short and frequent","Deload every 4 to 8 weeks"]}
+ ],
+ Q:[
+ {q:"What is a typical rep range for building strength?",o:["About 3 to 6","30 to 40","100","1 per week"],a:0},
+ {q:"A deload is...",o:["A week of reduced volume","A week of doubled volume","Quitting training","Only stretching"],a:0},
+ {q:"How should skill work be scheduled?",o:["Short and frequent","Once a month","Only when exhausted","Never"],a:0}
+ ]},
+
+{t:"Progression",lv:"Intermediate",d:"The levers you can pull to keep improving, and what to do when you stall.",
+ L:[
+ {t:"Seven ways to make something harder",p:["When an exercise gets easy you have many levers: more reps, more sets, slower tempo, pauses, harder leverage, added weight or less assistance. Change one at a time so you know what worked.","A popular method is double progression: pick a rep range like 6 to 10 and only make the exercise harder when every set reaches the top of it."],k:["Reps, sets, tempo, pauses, leverage, load, assistance","Change one variable at a time","Double progression is simple and reliable"]},
+ {t:"Plateaus and regressions",p:["If progress stalls for three or more sessions, check the basics: sleep, food, stress and total volume. Then step back to an easier variation, build volume and return.","Regressing is not failing. It is how you rebuild the base. Log your sessions so you can see slow trends that a single bad day hides."],k:["Check sleep, food, stress and volume","Step back a variation to rebuild","Log sessions to see real trends"]}
+ ],
+ Q:[
+ {q:"Double progression means...",o:["Hit the top of the rep range on every set, then progress","Doubling weight every week","Training twice a day","Skipping warm-ups"],a:0},
+ {q:"After a multi-session plateau, what should you check first?",o:["Sleep, food, stress and volume","Your shoes","The brand of chalk","The weather"],a:0},
+ {q:"Stepping back to an easier variation is...",o:["A normal tool for rebuilding","A failure","Forbidden","Pointless"],a:0}
+ ]},
+
+{t:"Mobility & Recovery",lv:"Beginner",d:"Bonus module: the mobility, sleep, food and rest that make all the other modules work.",
+ L:[
+ {t:"Mobility that unlocks skills",p:["Handstands need open shoulders, pistols need ankles, and compression skills need hips. Give these joints 5 to 10 minutes most days.","Active flexibility beats passive stretching: hold the end range and contract the muscles that move you there, so the new range becomes usable strength."],k:["Shoulders, wrists, hips and ankles","5 to 10 minutes most days","Active flexibility builds usable range"]},
+ {t:"Sleep, food and rest days",p:["Aim for 7 to 9 hours of sleep. To build muscle, a commonly cited protein target is about 1.6 to 2.2 g per kg of bodyweight per day, spread across meals, with enough total food to support your training.","Schedule rest days and take them seriously. Muscle soreness is normal, while sharp or joint pain is a signal to stop and reassess. If pain persists, see a qualified professional."],k:["7 to 9 hours of sleep","About 1.6 to 2.2 g protein per kg per day","Sharp joint pain means stop"]}
+ ],
+ Q:[
+ {q:"Active flexibility means...",o:["Holding the end range while contracting muscles","Only passive hanging","Never stretching","Stretching only when sore"],a:0},
+ {q:"Sharp joint pain during a movement means...",o:["Stop and reassess","Push harder","Add weight","Ignore it"],a:0},
+ {q:"A typical sleep target for training adults is...",o:["7 to 9 hours","3 hours","12+ hours","There is no target"],a:0}
+ ]}
+];
+
+const SK=[
+{id:'pullup',n:'Pull-up',u:'reps',s:['Dead hang','Scapular pull','Negatives','Assisted pull-up','Full pull-up','Weighted pull-up']},
+{id:'pushup',n:'Push-up',u:'reps',s:['Incline','Full push-up','Decline','Archer','One-arm']},
+{id:'dip',n:'Dip',u:'reps',s:['Bench dip','Negative dip','Parallel bar dip','Weighted dip','Ring dip']},
+{id:'lsit',n:'L-sit',u:'seconds',s:['Tuck L-sit','One leg extended','Full L-sit','V-sit']},
+{id:'handstand',n:'Handstand',u:'seconds',s:['Chest-to-wall','Back-to-wall','Freestanding 10s','Freestanding 30s','Press to handstand']},
+{id:'hspu',n:'Handstand push-up',u:'reps',s:['Pike push-up','Elevated pike','Wall negative','Wall HSPU','Freestanding HSPU']},
+{id:'pistol',n:'Pistol squat',u:'reps',s:['Box pistol','Assisted pistol','Counterweight','Full pistol','Weighted pistol']},
+{id:'muscleup',n:'Muscle-up',u:'reps',s:['Explosive pull-up','Negative transition','Band-assisted','Bar muscle-up','Ring muscle-up']},
+{id:'planche',n:'Planche',u:'seconds',s:['Planche lean','Frog stand','Tuck','Advanced tuck','Straddle','Full planche']},
+{id:'fl',n:'Front lever',u:'seconds',s:['Tuck','Advanced tuck','One-leg','Straddle','Full lever']}
+];
+
+/* ---------- STATE + STORAGE ---------- */
+const KEY='yalisthenixs:v1';
+let S={done:{},quiz:{},skills:{}};
+try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r);S.done=o.done||{};S.quiz=o.quiz||{};S.skills=o.skills||{};}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+/* ---------- HELPERS ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const reEsc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+const lid=(i,j)=>i+'-'+j;
+const TOTAL=MODS.reduce((n,m)=>n+m.L.length,0);
+const modDone=i=>MODS[i].L.filter((_,j)=>S.done[lid(i,j)]).length;
+const modPct=i=>Math.round(modDone(i)/MODS[i].L.length*100);
+const doneCount=()=>MODS.reduce((n,_,i)=>n+modDone(i),0);
+const pct=()=>Math.round(doneCount()/TOTAL*100);
+const passed=i=>{const q=S.quiz[i];return !!q&&q.best/q.total>=0.66};
+const quizPassed=()=>MODS.filter((_,i)=>passed(i)).length;
+const skillsStarted=()=>SK.filter(s=>S.skills[s.id]&&S.skills[s.id].stage>=0).length;
+function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function nextLesson(){for(let i=0;i<MODS.length;i++)for(let j=0;j<MODS[i].L.length;j++)if(!S.done[lid(i,j)])return[i,j];return null}
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200)}
+
+const IC={
+ home:'<svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>',
+ course:'<svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z"/><path d="M4 21V5"/></svg>',
+ tracker:'<svg viewBox="0 0 24 24"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg>',
+ search:'<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
+ check:'<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
+};
+const NAV=[['home','Home','#/'],['course','Course','#/course'],['tracker','Tracker','#/tracker'],['search','Search','#/search']];
+$('#bnav').innerHTML=NAV.map(n=>`<a href="${n[2]}" data-nav="${n[0]}">${IC[n[0]]}<span>${n[1]}</span></a>`).join('');
+$('#dnav').innerHTML=NAV.map(n=>`<a href="${n[2]}" data-nav="${n[0]}">${n[1]}</a>`).join('');
+
+function ladder(){return `<div class="ladder">${MODS.map((m,i)=>`<a class="rung" href="#/m/${i}" title="${i+1}. ${esc(m.t)}" aria-label="Module ${i+1}, ${esc(m.t)}, ${modPct(i)} percent"><i style="width:${modPct(i)}%"></i></a>`).join('')}</div>`}
+
+/* ---------- VIEWS ---------- */
+function homeView(){
+  const nx=nextLesson();
+  const started=doneCount()>0;
+  let cta;
+  if(nx){const l=MODS[nx[0]].L[nx[1]];cta=`<a class="btn" href="#/l/${lid(nx[0],nx[1])}">${started?'Continue':'Start'}: ${esc(l.t)}</a>`}
+  else cta=`<a class="btn" href="#/course">Review the course</a>`;
+  return `
+  <h1 class="mark">Yalisthenixs</h1>
+  <p class="lede">A self-paced calisthenics course. Learn why each movement works, test yourself, and track your skills from the first push-up to the planche.</p>
+  ${ladder()}
+  <div class="pcttxt"><span><b>${pct()}%</b> of the course complete</span><span>${doneCount()} of ${TOTAL} lessons</span></div>
+  <div class="btns">${cta}<a class="btn ghost" href="#/tracker">Skill tracker</a></div>
+  <div class="stats">
+    <div class="stat"><b>${doneCount()}</b><span>Lessons done</span></div>
+    <div class="stat"><b>${quizPassed()}</b><span>Quizzes passed</span></div>
+    <div class="stat"><b>${skillsStarted()}</b><span>Skills tracked</span></div>
+  </div>
+  <p class="dim small">Progress saves automatically on this device. ${MODS.length} modules, ${TOTAL} lessons, ${MODS.length} quizzes.</p>`;
+}
+
+function courseView(){
+  return `<h1>The course</h1>
+  <p class="lede">${MODS.length} modules, taken in order or picked as you need them. Finish the lessons, then take the quiz to lock it in.</p>
+  ${ladder()}
+  <div class="pcttxt"><span><b>${pct()}%</b> complete</span><span>${doneCount()} of ${TOTAL} lessons</span></div>
+  <div class="list">${MODS.map((m,i)=>`
+    <a class="row" href="#/m/${i}">
+      <span class="n">${i+1}</span>
+      <span class="mid"><span class="t">${esc(m.t)}</span>
+      <div class="m"><span class="tag">${m.lv}</span>${esc(m.d.split('.')[0])}</div>
+      <div class="mini"><i style="width:${modPct(i)}%"></i></div></span>
+      <span class="r">${modDone(i)}/${m.L.length}</span>
+    </a>`).join('')}</div>
+  <div class="btns"><button class="btn ghost" data-act="print" data-scope="all">Print or save the full course as PDF</button></div>`;
+}
+
+function modView(i){
+  const m=MODS[i];if(!m)return notFound();
+  const q=S.quiz[i];
+  return `<a class="crumb" href="#/course">All modules</a>
+  <h1>${i+1}. ${esc(m.t)}</h1>
+  <p class="lede"><span class="tag">${m.lv}</span>${esc(m.d)}</p>
+  <div class="mini" style="margin:0 0 6px"><i style="width:${modPct(i)}%"></i></div>
+  <div class="pcttxt"><span>${modDone(i)} of ${m.L.length} lessons complete</span></div>
+  <div class="list">
+  ${m.L.map((l,j)=>`
+    <a class="row" href="#/l/${lid(i,j)}">
+      <span class="chk ${S.done[lid(i,j)]?'on':''}">${IC.check}</span>
+      <span class="mid"><span class="t">${esc(l.t)}</span></span>
+      <span class="r">Lesson ${j+1}</span>
+    </a>`).join('')}
+    <a class="row quizrow" href="#/q/${i}">
+      <span class="n">?</span>
+      <span class="mid"><span class="t">Module quiz</span>
+      <div class="m">${q?`Best score ${q.best} of ${q.total}`+(passed(i)?', passed':''):`${m.Q.length} questions`}</div></span>
+    </a>
+  </div>
+  <div class="btns"><button class="btn ghost" data-act="print" data-scope="m${i}">Print this module</button></div>`;
+}
+
+function lessonView(i,j){
+  const m=MODS[i];if(!m||!m.L[j])return notFound();
+  const l=m.L[j],id=lid(i,j),done=!!S.done[id];
+  const nxt=j<m.L.length-1?{h:`#/l/${lid(i,j+1)}`,k:'Next lesson',t:m.L[j+1].t}:{h:`#/q/${i}`,k:'Up next',t:'Quiz: '+m.t};
+  const prv=j>0?{h:`#/l/${lid(i,j-1)}`,k:'Previous lesson',t:m.L[j-1].t}:null;
+  return `<a class="crumb" href="#/m/${i}">Module ${i+1}: ${esc(m.t)}</a>
+  <div class="eyebrow">Lesson ${j+1} of ${m.L.length}</div>
+  <h1 style="margin-top:6px">${esc(l.t)}</h1>
+  <div class="prose">${l.p.map(p=>`<p>${esc(p)}</p>`).join('')}</div>
+  <div class="remember"><h3>Remember</h3><ul>${l.k.map(k=>`<li>${esc(k)}</li>`).join('')}</ul></div>
+  <button class="btn block ${done?'done':''}" id="donebtn" data-act="toggle" data-id="${id}">${done?'Completed. Tap to undo':'Mark lesson complete'}</button>
+  <div class="pn">${prv?`<a href="${prv.h}"><small>${prv.k}</small><span>${esc(prv.t)}</span></a>`:'<span></span>'}<a href="${nxt.h}"><small>${nxt.k}</small><span>${esc(nxt.t)}</span></a></div>
+  <div class="btns"><button class="btn ghost" data-act="print" data-scope="${id}">Print this lesson</button></div>`;
+}
+
+/* quiz */
+let Z={};
+function startQuiz(i){Z={i,n:0,score:0,pick:null,done:false,ord:MODS[i]?MODS[i].Q.map(q=>shuf(q.o.map((_,k)=>k))):[]}}
+function quizView(){
+  const i=Z.i,m=MODS[i];
+  if(!m)return notFound();
+  if(Z.done){
+    const tot=m.Q.length,ok=Z.score/tot>=0.66;
+    return `<a class="crumb" href="#/m/${i}">Module ${i+1}: ${esc(m.t)}</a>
+    <div class="score">${Z.score}/${tot}</div>
+    <h2 style="margin-top:0">${Z.score===tot?'Perfect score.':ok?'Passed.':'Not there yet.'}</h2>
+    <p class="lede">${ok?'You understand the core ideas of this module. Keep them fresh by using them in training.':'Reread the lessons in this module, then try again. Nothing is lost, and your best score is kept.'}</p>
+    <div class="btns">
+      <button class="btn" data-act="retake">Retake quiz</button>
+      <a class="btn ghost" href="#/m/${i}">Back to lessons</a>
+      ${i<MODS.length-1?`<a class="btn ghost" href="#/m/${i+1}">Next module</a>`:`<a class="btn ghost" href="#/course">All modules</a>`}
+    </div>`;
+  }
+  const q=m.Q[Z.n],ord=Z.ord[Z.n],tot=m.Q.length;
+  const opts=ord.map(k=>{
+    let c='';if(Z.pick!==null){if(k===q.a)c='ok';else if(k===Z.pick)c='bad'}
+    return `<button class="opt ${c}" data-act="ans" data-k="${k}" ${Z.pick!==null?'disabled':''}>${esc(q.o[k])}</button>`}).join('');
+  let fb='';
+  if(Z.pick!==null){fb=Z.pick===q.a?`<div class="fb"><b>Correct.</b></div>`:`<div class="fb"><b>Not quite.</b> The right answer is highlighted. Revisit the lessons if it is still unclear.</div>`}
+  return `<a class="crumb" href="#/m/${i}">Module ${i+1}: ${esc(m.t)}</a>
+  <div class="qtop"><span>Question ${Z.n+1} of ${tot}</span><span>${Z.score} correct</span></div>
+  <div class="qbar"><i style="width:${(Z.n+(Z.pick!==null?1:0))/tot*100}%"></i></div>
+  <h2 class="q">${esc(q.q)}</h2>
+  ${opts}${fb}
+  ${Z.pick!==null?`<div class="btns"><button class="btn" data-act="qnext">${Z.n<tot-1?'Next question':'See results'}</button></div>`:''}`;
+}
+function renderQuiz(){$('#app').innerHTML=quizView()}
+
+/* tracker */
+function trackerView(){
+  return `<h1>Skill tracker</h1>
+  <p class="lede">Tap the stage you are at right now. Tap it again to clear it. Log your best hold or rep count next to it.</p>
+  <div class="pcttxt"><span><b>${skillsStarted()}</b> of ${SK.length} skills started</span></div>
+  ${SK.map(s=>{
+    const st=S.skills[s.id]||{stage:-1,best:''};
+    const cur=st.stage>=0?s.s[st.stage]:'Not started';
+    return `<section class="skill" aria-label="${esc(s.n)}">
+      <div class="hd"><h3>${esc(s.n)}</h3><span class="cur">${esc(cur)}</span></div>
+      <div class="mini" style="margin-top:10px"><i style="width:${(st.stage+1)/s.s.length*100}%"></i></div>
+      <div class="chips">${s.s.map((x,k)=>`<button class="chip ${k===st.stage?'on':k<st.stage?'reached':''}" data-act="stage" data-skill="${s.id}" data-k="${k}" aria-pressed="${k===st.stage}">${esc(x)}</button>`).join('')}</div>
+      <label class="best">Best <input type="number" inputmode="numeric" min="0" max="999" data-best="${s.id}" value="${esc(st.best===undefined?'':st.best)}" aria-label="${esc(s.n)} best in ${s.u}"> ${s.u}</label>
+    </section>`}).join('')}`;
+}
+
+/* search */
+const IDX=[];MODS.forEach((m,i)=>m.L.forEach((l,j)=>IDX.push({i,j,title:l.t,mod:m.t,body:l.p.join(' ')+' '+l.k.join(' ')})));
+function searchResults(q){
+  const terms=q.toLowerCase().split(/\s+/).filter(Boolean);
+  if(!terms.length)return `<p class="empty">Try a movement, muscle or idea, like pistol, lats or deload.</p>`;
+  const res=IDX.map(x=>{
+    const t=(x.title+' '+x.mod).toLowerCase(),b=x.body.toLowerCase();
+    if(!terms.every(w=>t.includes(w)||b.includes(w)))return null;
+    return{x,sc:terms.reduce((s,w)=>s+(t.includes(w)?5:0)+(b.includes(w)?1:0),0)};
+  }).filter(Boolean).sort((a,b)=>b.sc-a.sc).slice(0,30);
+  if(!res.length)return `<p class="empty">No lessons match that. Try a shorter word, like pull or squat.</p>`;
+  const rx=new RegExp('('+terms.map(t=>reEsc(esc(t))).join('|')+')','gi');
+  return res.map(({x})=>{
+    const b=x.body,lb=b.toLowerCase();
+    const pos=Math.min(...terms.map(w=>lb.indexOf(w)).filter(p=>p>=0).concat([9999]));
+    const start=pos===9999?0:Math.max(0,pos-50);
+    const snip=(start>0?'...':'')+b.slice(start,start+150)+(start+150<b.length?'...':'');
+    return `<a class="hit" href="#/l/${lid(x.i,x.j)}"><div class="t">${esc(x.title).replace(rx,'<mark>$1</mark>')}</div><div class="m">Module ${x.i+1}: ${esc(x.mod)}</div><p>${esc(snip).replace(rx,'<mark>$1</mark>')}</p></a>`;
+  }).join('');
+}
+function searchView(){
+  return `<h1>Search lessons</h1>
+  <input class="sbox" id="q" type="search" placeholder="Search movements, muscles, ideas" autocomplete="off" aria-label="Search lessons">
+  <div id="res">${searchResults('')}</div>`;
+}
+function notFound(){return `<h1>Page not found</h1><p class="lede">That lesson or module does not exist.</p><a class="btn" href="#/course">Go to the course</a>`}
+
+/* ---------- ROUTER ---------- */
+function route(){
+  const seg=(location.hash||'#/').slice(1).split('/').filter(Boolean);
+  const v=seg[0]||'home',a=seg[1];
+  let html,nav='home';
+  if(v==='course'){html=courseView();nav='course'}
+  else if(v==='m'){html=modView(+a);nav='course'}
+  else if(v==='l'){const p=(a||'').split('-');html=lessonView(+p[0],+p[1]);nav='course'}
+  else if(v==='q'){startQuiz(+a);html=quizView();nav='course'}
+  else if(v==='tracker'){html=trackerView();nav='tracker'}
+  else if(v==='search'){html=searchView();nav='search'}
+  else html=homeView();
+  $('#app').innerHTML=html;
+  chrome(nav);
+  try{window.scrollTo(0,0)}catch(e){}
+  if(v==='search'){const q=$('#q');if(q)q.focus({preventScroll:true})}
+}
+function chrome(nav){
+  document.querySelectorAll('[data-nav]').forEach(a=>{const on=a.dataset.nav===nav;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+  $('#gbar').style.width=pct()+'%';
+  $('#gbarwrap').setAttribute('aria-valuenow',pct());
+}
+window.addEventListener('hashchange',route);
+
+/* ---------- PRINT ---------- */
+function lessonPrint(l){return `<h3>${esc(l.t)}</h3>${l.p.map(p=>`<p>${esc(p)}</p>`).join('')}<ul>${l.k.map(k=>`<li>${esc(k)}</li>`).join('')}</ul>`}
+function buildPrint(scope){
+  let mods,only=null,h='';
+  if(scope==='all'){mods=MODS.map((_,i)=>i);h+=`<h1>Yalisthenixs</h1><p class="meta">Complete Calisthenics Course</p>`}
+  else if(scope[0]==='m'){mods=[+scope.slice(1)]}
+  else{const p=scope.split('-');mods=[+p[0]];only=scope}
+  mods.forEach((i,idx)=>{
+    h+=`<h2 class="${scope!=='all'&&idx===0?'first':''}">${i+1}. ${esc(MODS[i].t)}</h2><p class="meta">${MODS[i].lv}. ${esc(MODS[i].d)}</p>`;
+    MODS[i].L.forEach((l,j)=>{if(only&&only!==lid(i,j))return;h+=lessonPrint(l)});
+  });
+  return h;
+}
+function doPrint(scope){
+  $('#printRoot').innerHTML=buildPrint(scope);
+  try{window.print()}catch(e){toast('Printing is not available here')}
+}
+window.addEventListener('afterprint',()=>{$('#printRoot').innerHTML=''});
+
+/* ---------- EVENTS ---------- */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;
+  const act=b.dataset.act;
+  if(act==='print'){doPrint(b.dataset.scope)}
+  else if(act==='toggle'){
+    const id=b.dataset.id;S.done[id]=!S.done[id];if(!S.done[id])delete S.done[id];save();
+    const on=!!S.done[id];
+    b.classList.toggle('done',on);b.textContent=on?'Completed. Tap to undo':'Mark lesson complete';
+    chrome('course');
+    toast(on?'Lesson complete. Progress '+pct()+'%':'Lesson marked incomplete');
+  }
+  else if(act==='ans'){if(Z.pick!==null)return;Z.pick=+b.dataset.k;if(Z.pick===MODS[Z.i].Q[Z.n].a)Z.score++;renderQuiz()}
+  else if(act==='qnext'){
+    const tot=MODS[Z.i].Q.length;
+    if(Z.n<tot-1){Z.n++;Z.pick=null}
+    else{Z.done=true;const p=S.quiz[Z.i];if(!p||Z.score>p.best){S.quiz[Z.i]={best:Z.score,total:tot}}save();chrome('course')}
+    renderQuiz();try{window.scrollTo(0,0)}catch(err){}
+  }
+  else if(act==='retake'){startQuiz(Z.i);renderQuiz();try{window.scrollTo(0,0)}catch(err){}}
+  else if(act==='stage'){
+    const id=b.dataset.skill,k=+b.dataset.k;
+    const cur=S.skills[id]||{stage:-1,best:''};
+    S.skills[id]={stage:cur.stage===k?-1:k,best:cur.best};save();
+    const y=window.scrollY;$('#app').innerHTML=trackerView();try{window.scrollTo(0,y)}catch(err){}
+  }
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.dataset&&t.dataset.best){
+    const id=t.dataset.best,cur=S.skills[id]||{stage:-1,best:''};
+    S.skills[id]={stage:cur.stage,best:t.value};save();
+  }
+  else if(t.id==='q'){$('#res').innerHTML=searchResults(t.value)}
+});
+
+route();
+</script>
+</body>
+</html>
